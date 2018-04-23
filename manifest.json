@@ -1,0 +1,17 @@
+{
+  "name": "Word Hatch",
+  "version": "1",
+  "description": "Extension that can work as a dictionary alternate.",
+  "background": {"page": "background.html"},
+  "browser_action": {
+    "name": "Dictionary alternate",
+    "icons": ["icon.png"],
+    "default_icon": "icon.png"
+  },
+  "content_scripts": [ {
+    "js": [ "jquery.min.js", "background.js" ],
+	"css":        ["style.css"],
+    "matches": [ "http://*/*", "https://*/*"]
+  }],
+  "manifest_version":2
+}
