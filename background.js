@@ -1,3 +1,68 @@
+var code = "<div id=\"popup\" class=\"w3-modal\" >"+ 
+" <div class=\"w3-modal-content w3-card-4 w3-animate-zoom\">"+
+  "<header class=\"w3-container w3-blue\"> "+
+   "<span onclick=\"selectmeaning()\" "+
+   "class=\"w3-button w3-blue w3-xlarge w3-display-topright\">&times;</span>"+
+   "<h2 id=\"header\"></h2>"+
+ " </header>"+
+  "<div class=\"w3-bar w3-border-bottom\">"+
+  " <button class=\"tablink w3-bar-item w3-button\" id=\"button\" onclick=\"openpopup(event, 'Meaning')\">Meaning</button>"+
+   "<button class=\"tablink w3-bar-item w3-button\" onclick=\"openpopup(event, 'Antonym')\">Antonym</button>"+
+   "<button class=\"tablink w3-bar-item w3-button\" onclick=\"openpopup(event, 'Synonym')\">Synonym</button>"+
+  " </div>"+
+ " <div id=\"Meaning\" class=\"w3-container city\" style=\"display:block\">"+
+   "<h1>Meaning</h1>"+
+   "<p id=\"meancontent\"></p>"+
+  "</div>"+
+  "<div id=\"Synonym\" class=\"w3-container city\" style=\"display:none\">"+
+   "<h1>Synonym</h1>"+
+   "<p id=\"synocontent\"></p>"+
+  "</div>"+
+  "<div id=\"Antonym\" class=\"w3-container city\" style=\"display:none\">"+
+   "<h1>Antonym</h1>"+
+   "<p id=\"antocontent\"></p>"+
+  "</div>"+
+  "<div class=\"w3-container w3-light-grey w3-padding\">"+
+   "<button class=\"w3-button w3-right w3-white w3-border\" "+
+   "onclick=\"selectmeaning()\">Close</button>"+
+ " </div>"+
+ "</div>"+
+"</div>";
+
+var openpopup = "function openpopup(evt, cityName) "+
+				"{"+
+					 " var i, x, tablinks;"+
+					  "x = document.getElementsByClassName(\"city\");"+
+					  "for (i = 0; i < x.length; i++) "+
+					  "{"+
+							"x[i].style.display = \"none\";"+
+					  "}"+
+					  "tablinks = document.getElementsByClassName(\"tablink\");"+
+					  "for (i = 0; i < x.length; i++) "+
+					  "{"+
+							"tablinks[i].classList.remove(\"w3-light-grey\");"+
+					  "}"+
+					  "document.getElementById(cityName).style.display = \"block\";"+
+					  "evt.currentTarget.classList.add(\"w3-light-grey\");"+
+				"}";
+var selectmeaning = "function selectmeaning()"+
+"{"+
+	"document.getElementById(\"Meaning\").style.display = \"block\";"+
+	"document.getElementById(\"Synonym\").style.display = \"none\";"+
+	"document.getElementById(\"Antonym\").style.display = \"none\";"+
+	"document.getElementById(\"popup\").style.display = \"none\";"+
+	"tablinks = document.getElementsByClassName(\"tablink\");"+
+	"x = document.getElementsByClassName(\"city\");"+
+	  
+	"for (i = 0; i < x.length; i++) "+
+	"{"+
+		"tablinks[i].classList.remove(\"w3-light-grey\");"+
+	"}"+
+	"document.getElementById(\"button\").classList.add(\"w3-light-grey\");"+
+"}";
+$("body").append(code);
+$("body").append('<script>'+openpopup+'</script>');
+$("body").append('<script>'+selectmeaning+'</script>');
 $(document).mouseup( function(e)
 	{
         var selection;
@@ -25,7 +90,7 @@ $(document).mouseup( function(e)
 			document.getElementById('popup').style.display='block';	
 		}		
 		if (e.target.id === 'popup') {
-           selectmeaning();
+           selectmeaning1();
         }
     });
 function process(result) 
@@ -187,7 +252,6 @@ function process(result)
 }
 function xmlToJson(xml) 
 {
-
 	// Create the return object
 	var obj = {};
 
@@ -239,23 +303,7 @@ function xmlToJson(xml)
 	}
 	return obj;
 }
-function openpopup(evt, cityName) 
-{
-	  var i, x, tablinks;
-	  x = document.getElementsByClassName("city");
-	  for (i = 0; i < x.length; i++) 
-	  {
-			x[i].style.display = "none";
-	  }
-	  tablinks = document.getElementsByClassName("tablink");
-	  for (i = 0; i < x.length; i++) 
-	  {
-			tablinks[i].classList.remove("w3-light-grey");
-	  }
-	  document.getElementById(cityName).style.display = "block";
-	  evt.currentTarget.classList.add("w3-light-grey");
-}
-function selectmeaning()
+function selectmeaning1()
 {
 	document.getElementById("Meaning").style.display = "block";
 	document.getElementById("Synonym").style.display = "none";
