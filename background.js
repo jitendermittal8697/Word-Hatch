@@ -21,15 +21,15 @@ var code = "<div id=\"popup\" class=\"container\" style=\"display:none\">"+
                                " </li>"+
                            " </ul>"+
                            " <div class=\"tab-content\">"+
-                              "  <div id=\"Meaning\" class=\"container tab-pane active\">"+
+                              "  <div id=\"Meaning\" class=\"container tab-pane active\" style=\"overflow-y: scroll;height:120px;\">"+
 								"<br>"+
 								"<p id=\"meancontent\"></p>"+
                                " </div>"+
-                                "<div id=\"Antonym\" class=\"container tab-pane fade\">"+
+                                "<div id=\"Antonym\" class=\"container tab-pane fade\" style=\"overflow-y: scroll;height:120px;\">"+
 								"<br>"+
 								"<p id=\"synocontent\"></p>"+
                                " </div>"+
-                                "<div id=\"Synonym\" class=\"container tab-pane fade\">"+
+                                "<div id=\"Synonym\" class=\"container tab-pane fade\" style=\"overflow-y: scroll;height:120px;\">"+
 								"<br>"+
 								"<p id=\"antocontent\"></p>"+
                                 "</div>"+
@@ -60,7 +60,7 @@ $(document).mouseup( function(e)
 		var sel = selection.toString();
 		var str = sel.trim();
 		var abc = str.replace(/[^a-zA-Z ]/g, "");
-		document.getElementById('header').innerHTML=abc;
+		document.getElementById('header').innerHTML = "<b>" + "Selected Word : " + abc + "</b>";
 		var src = "https://www.dictionaryapi.com/api/v1/references/thesaurus/xml/"+abc+"?key=91859f8f-807f-47e1-b41d-593375234bd2"; // NOTE: replace test_only with your own KEY 
 		jQuery.get( src, function( response ) { 
 		var obj = xmlToJson(response);
@@ -72,9 +72,10 @@ $(document).mouseup( function(e)
 		}); 
 	}		
 });
+i = 0;
 function process(result) 
 { 
-	outputsyn = ""; 
+	outputsyn = "<ul>"; 
 	outputant = ""; 
 	outputmea = ""; 
 	for(var entry in result.entry_list)
@@ -103,12 +104,12 @@ function process(result)
 					{
 						if(typeof result.entry_list[entry][key1]['mc'].hasOwnProperty('#text'))
 						{
-							outputmea +=result.entry_list[entry][key1]['mc']['#text']+"&nbsp;&nbsp;<br>";
+							outputmea += "<li>" + result.entry_list[entry][key1]['mc']['#text']+"</li>";
 						}
 					}
 					else
 					{
-						outputmea +=result.entry_list[entry][key1].mc+"&nbsp;&nbsp;<br>";
+						outputmea += "<li>" + result.entry_list[entry][key1].mc+"</li>";
 					}
 				}
 				if(result.entry_list[entry][key1].hasOwnProperty('ant'))
@@ -150,12 +151,12 @@ function process(result)
 						{
 							if(result.entry_list[entry][key1][sens]['mc'].hasOwnProperty('#text'))
 							{
-								outputmea +=result.entry_list[entry][key1][sens]['mc']['#text']+"&nbsp;&nbsp;<br>";
+								outputmea +="<li>" + result.entry_list[entry][key1][sens]['mc']['#text']+"</li>";
 							}
 						}
 						else
 						{
-							outputmea +=result.entry_list[entry][key1][sens].mc+"&nbsp;&nbsp;<br>";
+							outputmea += "<li>" + result.entry_list[entry][key1][sens].mc+"</li>";
 						}
 					}
 					if(result.entry_list[entry][key1][sens].hasOwnProperty('ant'))
@@ -197,12 +198,12 @@ function process(result)
 							{
 								if(typeof result.entry_list[entry][key1][sens][key2]['mc'].hasOwnProperty('#text'))
 								{
-									outputmea +=result.entry_list[entry][key1][sens][key2]['mc']['#text']+"&nbsp;&nbsp;<br>";
+									outputmea += "<li>" + result.entry_list[entry][key1][sens][key2]['mc']['#text']+"</li>";
 								}
 							}
 							else
 							{
-								outputmea +=result.entry_list[entry][key1][sens][key2].mc+"&nbsp;&nbsp;<br>";
+								outputmea +="<li>" + result.entry_list[entry][key1][sens][key2].mc+"</li>";
 							}
 						}
 						if(result.entry_list[entry][key1][sens][key2].hasOwnProperty('ant')&&typeof result.entry_list[entry][key1][sens][key2]['ant']!=="object")
@@ -224,6 +225,7 @@ function process(result)
 			}
 		}
 	} 
+	outputmea = outputmea + "</ui>";
 	document.getElementById("synocontent").innerHTML = outputsyn; 
 	document.getElementById("antocontent").innerHTML = outputant; 
 	document.getElementById("meancontent").innerHTML = outputmea; 
